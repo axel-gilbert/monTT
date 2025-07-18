@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/TeleworkManagementAPI.props" />
+</Project>
