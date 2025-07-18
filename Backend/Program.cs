@@ -111,7 +111,7 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ITeleworkRequestService, TeleworkRequestService>();
 builder.Services.AddScoped<ISeedDataService, SeedDataService>();
 
-// Configuration CORS
+// Configuration CORS - Autoriser tout le monde
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -140,8 +140,10 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// IMPORTANT: CORS doit être appelé avant UseHttpsRedirection et UseAuthentication
 app.UseCors("AllowAll");
+
+app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();

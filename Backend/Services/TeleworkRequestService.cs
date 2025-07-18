@@ -95,6 +95,7 @@ namespace TeleworkManagementAPI.Services
 
             var requests = await _context.TeleworkRequests
                 .Include(tr => tr.ProcessedByManager)
+                    .ThenInclude(e => e.User)
                 .Where(tr => tr.EmployeeId == employee.Id)
                 .OrderByDescending(tr => tr.RequestDate)
                 .ToListAsync();
@@ -152,6 +153,7 @@ namespace TeleworkManagementAPI.Services
                 .Include(tr => tr.Employee)
                     .ThenInclude(e => e.User)
                 .Include(tr => tr.ProcessedByManager)
+                    .ThenInclude(e => e.User)
                 .Where(tr => tr.Employee.CompanyId == manager.CompanyId)
                 .OrderByDescending(tr => tr.RequestDate)
                 .ToListAsync();
@@ -208,7 +210,9 @@ namespace TeleworkManagementAPI.Services
             // Vérifier que la demande existe et appartient à l'entreprise du manager
             var request = await _context.TeleworkRequests
                 .Include(tr => tr.Employee)
+                    .ThenInclude(e => e.User)
                 .Include(tr => tr.ProcessedByManager)
+                    .ThenInclude(e => e.User)
                 .FirstOrDefaultAsync(tr => tr.Id == requestId && 
                                          tr.Employee.CompanyId == manager.CompanyId);
 
@@ -279,7 +283,9 @@ namespace TeleworkManagementAPI.Services
 
             var requests = await _context.TeleworkRequests
                 .Include(tr => tr.Employee)
+                    .ThenInclude(e => e.User)
                 .Include(tr => tr.ProcessedByManager)
+                    .ThenInclude(e => e.User)
                 .Where(tr => tr.Employee.CompanyId == manager.CompanyId &&
                            tr.TeleworkDate.Date >= weekStart.Date &&
                            tr.TeleworkDate.Date <= weekEnd.Date)
