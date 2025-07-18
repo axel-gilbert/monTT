@@ -81,11 +81,11 @@ namespace TeleworkManagementAPI.Controllers
         /// <response code="404">Aucune entreprise trouvée</response>
         [HttpGet("company")]
         [Authorize(Roles = "Manager")]
-        [ProducesResponseType(typeof(List<TeleworkRequestListDto>), 200)]
+        [ProducesResponseType(typeof(List<TeleworkRequestDto>), 200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(403)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<List<TeleworkRequestListDto>>> GetCompanyRequests()
+        public async Task<ActionResult<List<TeleworkRequestDto>>> GetCompanyRequests()
         {
             try
             {

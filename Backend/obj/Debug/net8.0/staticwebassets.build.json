@@ -1,11 +1,39 @@
 {
   "Version": 1,
-  "Hash": "97eecGfmR8458Ixpg6/zuzt7aTpzlc4dSO7+udW95MQ=",
+  "Hash": "zZH7UiiCkcrYZP4t/OI774DH2/g0SfFLn23TV40bWYY=",
   "Source": "TeleworkManagementAPI",
   "BasePath": "_content/TeleworkManagementAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "TeleworkManagementAPI/wwwroot",
+      "Source": "TeleworkManagementAPI",
+      "ContentRoot": "/Users/axel/Documents/IPI/workspace/monTT/Backend/wwwroot/",
+      "BasePath": "_content/TeleworkManagementAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/Users/axel/Documents/IPI/workspace/monTT/Backend/wwwroot/.gitkeep",
+      "SourceId": "TeleworkManagementAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/axel/Documents/IPI/workspace/monTT/Backend/wwwroot/",
+      "BasePath": "_content/TeleworkManagementAPI",
+      "RelativePath": ".gitkeep",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/.gitkeep"
+    }
+  ]
 }

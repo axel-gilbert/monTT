@@ -9,7 +9,7 @@ namespace TeleworkManagementAPI.Services
     {
         Task<TeleworkRequestDto> CreateRequestAsync(CreateTeleworkRequestDto createDto, int userId);
         Task<List<TeleworkRequestDto>> GetMyRequestsAsync(int userId);
-        Task<List<TeleworkRequestListDto>> GetCompanyRequestsAsync(int managerId);
+        Task<List<TeleworkRequestDto>> GetCompanyRequestsAsync(int managerId);
         Task<TeleworkRequestDto> ProcessRequestAsync(int requestId, ProcessTeleworkRequestDto processDto, int managerId);
         Task<WeeklyPlanningDto> GetWeeklyPlanningAsync(int managerId, DateTime weekStart);
     }
@@ -62,16 +62,25 @@ namespace TeleworkManagementAPI.Services
             return new TeleworkRequestDto
             {
                 Id = request.Id,
-                EmployeeId = request.EmployeeId,
-                EmployeeName = $"{employee.FirstName} {employee.LastName}",
                 RequestDate = request.RequestDate,
                 TeleworkDate = request.TeleworkDate,
                 Reason = request.Reason,
                 Status = request.Status,
                 ManagerComment = request.ManagerComment,
                 ProcessedAt = request.ProcessedAt,
-                ProcessedByManagerId = request.ProcessedByManagerId,
-                ProcessedByManagerName = null
+                Employee = new EmployeeListDto
+                {
+                    Id = employee.Id,
+                    Email = employee.User.Email,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Position = employee.Position,
+                    Role = employee.User.Role,
+                    CompanyId = employee.CompanyId,
+                    CompanyName = null,
+                    IsAssignedToCompany = employee.CompanyId.HasValue
+                },
+                ProcessedByManager = null
             };
         }
 
@@ -93,22 +102,40 @@ namespace TeleworkManagementAPI.Services
             return requests.Select(tr => new TeleworkRequestDto
             {
                 Id = tr.Id,
-                EmployeeId = tr.EmployeeId,
-                EmployeeName = $"{employee.FirstName} {employee.LastName}",
                 RequestDate = tr.RequestDate,
                 TeleworkDate = tr.TeleworkDate,
                 Reason = tr.Reason,
                 Status = tr.Status,
                 ManagerComment = tr.ManagerComment,
                 ProcessedAt = tr.ProcessedAt,
-                ProcessedByManagerId = tr.ProcessedByManagerId,
-                ProcessedByManagerName = tr.ProcessedByManager != null 
-                    ? $"{tr.ProcessedByManager.FirstName} {tr.ProcessedByManager.LastName}" 
-                    : null
+                Employee = new EmployeeListDto
+                {
+                    Id = employee.Id,
+                    Email = employee.User.Email,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Position = employee.Position,
+                    Role = employee.User.Role,
+                    CompanyId = employee.CompanyId,
+                    CompanyName = null,
+                    IsAssignedToCompany = employee.CompanyId.HasValue
+                },
+                ProcessedByManager = tr.ProcessedByManager != null ? new EmployeeListDto
+                {
+                    Id = tr.ProcessedByManager.Id,
+                    Email = tr.ProcessedByManager.User.Email,
+                    FirstName = tr.ProcessedByManager.FirstName,
+                    LastName = tr.ProcessedByManager.LastName,
+                    Position = tr.ProcessedByManager.Position,
+                    Role = tr.ProcessedByManager.User.Role,
+                    CompanyId = tr.ProcessedByManager.CompanyId,
+                    CompanyName = null,
+                    IsAssignedToCompany = tr.ProcessedByManager.CompanyId.HasValue
+                } : null
             }).ToList();
         }
 
-        public async Task<List<TeleworkRequestListDto>> GetCompanyRequestsAsync(int managerId)
+        public async Task<List<TeleworkRequestDto>> GetCompanyRequestsAsync(int managerId)
         {
             // Vérifier que l'utilisateur est un manager
             var manager = await _context.Employees
@@ -129,20 +156,39 @@ namespace TeleworkManagementAPI.Services
                 .OrderByDescending(tr => tr.RequestDate)
                 .ToListAsync();
 
-            return requests.Select(tr => new TeleworkRequestListDto
+            return requests.Select(tr => new TeleworkRequestDto
             {
                 Id = tr.Id,
-                EmployeeName = $"{tr.Employee.FirstName} {tr.Employee.LastName}",
-                EmployeeEmail = tr.Employee.User.Email,
                 RequestDate = tr.RequestDate,
                 TeleworkDate = tr.TeleworkDate,
                 Reason = tr.Reason,
                 Status = tr.Status,
                 ManagerComment = tr.ManagerComment,
                 ProcessedAt = tr.ProcessedAt,
-                ProcessedByManagerName = tr.ProcessedByManager != null 
-                    ? $"{tr.ProcessedByManager.FirstName} {tr.ProcessedByManager.LastName}" 
-                    : null
+                Employee = new EmployeeListDto
+                {
+                    Id = tr.Employee.Id,
+                    Email = tr.Employee.User.Email,
+                    FirstName = tr.Employee.FirstName,
+                    LastName = tr.Employee.LastName,
+                    Position = tr.Employee.Position,
+                    Role = tr.Employee.User.Role,
+                    CompanyId = tr.Employee.CompanyId,
+                    CompanyName = null,
+                    IsAssignedToCompany = tr.Employee.CompanyId.HasValue
+                },
+                ProcessedByManager = tr.ProcessedByManager != null ? new EmployeeListDto
+                {
+                    Id = tr.ProcessedByManager.Id,
+                    Email = tr.ProcessedByManager.User.Email,
+                    FirstName = tr.ProcessedByManager.FirstName,
+                    LastName = tr.ProcessedByManager.LastName,
+                    Position = tr.ProcessedByManager.Position,
+                    Role = tr.ProcessedByManager.User.Role,
+                    CompanyId = tr.ProcessedByManager.CompanyId,
+                    CompanyName = null,
+                    IsAssignedToCompany = tr.ProcessedByManager.CompanyId.HasValue
+                } : null
             }).ToList();
         }
 
@@ -183,16 +229,36 @@ namespace TeleworkManagementAPI.Services
             return new TeleworkRequestDto
             {
                 Id = request.Id,
-                EmployeeId = request.EmployeeId,
-                EmployeeName = $"{request.Employee.FirstName} {request.Employee.LastName}",
                 RequestDate = request.RequestDate,
                 TeleworkDate = request.TeleworkDate,
                 Reason = request.Reason,
                 Status = request.Status,
                 ManagerComment = request.ManagerComment,
                 ProcessedAt = request.ProcessedAt,
-                ProcessedByManagerId = request.ProcessedByManagerId,
-                ProcessedByManagerName = $"{manager.FirstName} {manager.LastName}"
+                Employee = new EmployeeListDto
+                {
+                    Id = request.Employee.Id,
+                    Email = request.Employee.User.Email,
+                    FirstName = request.Employee.FirstName,
+                    LastName = request.Employee.LastName,
+                    Position = request.Employee.Position,
+                    Role = request.Employee.User.Role,
+                    CompanyId = request.Employee.CompanyId,
+                    CompanyName = null,
+                    IsAssignedToCompany = request.Employee.CompanyId.HasValue
+                },
+                ProcessedByManager = new EmployeeListDto
+                {
+                    Id = manager.Id,
+                    Email = manager.User.Email,
+                    FirstName = manager.FirstName,
+                    LastName = manager.LastName,
+                    Position = manager.Position,
+                    Role = manager.User.Role,
+                    CompanyId = manager.CompanyId,
+                    CompanyName = null,
+                    IsAssignedToCompany = manager.CompanyId.HasValue
+                }
             };
         }
 
@@ -221,26 +287,80 @@ namespace TeleworkManagementAPI.Services
                 .ThenBy(tr => tr.Employee.FirstName)
                 .ToListAsync();
 
+            var dailyRequests = new List<DailyTeleworkDto>();
+            var stats = new WeeklyStatsDto
+            {
+                TotalRequests = requests.Count,
+                ApprovedRequests = requests.Count(r => r.Status == "Approved"),
+                PendingRequests = requests.Count(r => r.Status == "Pending"),
+                RejectedRequests = requests.Count(r => r.Status == "Rejected"),
+                UniqueEmployees = requests.Select(r => r.EmployeeId).Distinct().Count()
+            };
+
+            if (stats.TotalRequests > 0)
+            {
+                stats.ApprovalRate = Math.Round((double)stats.ApprovedRequests / stats.TotalRequests * 100, 1);
+            }
+
+            // Grouper les demandes par jour
+            for (int i = 0; i < 7; i++)
+            {
+                var currentDate = weekStart.AddDays(i);
+                var dayRequests = requests.Where(r => r.TeleworkDate.Date == currentDate.Date).ToList();
+
+                var dailyTelework = new DailyTeleworkDto
+                {
+                    Date = currentDate,
+                    DayName = currentDate.ToString("dddd", new System.Globalization.CultureInfo("fr-FR")),
+                    Requests = dayRequests.Select(tr => new TeleworkRequestDto
+                    {
+                        Id = tr.Id,
+                        RequestDate = tr.RequestDate,
+                        TeleworkDate = tr.TeleworkDate,
+                        Reason = tr.Reason,
+                        Status = tr.Status,
+                        ManagerComment = tr.ManagerComment,
+                        ProcessedAt = tr.ProcessedAt,
+                        Employee = new EmployeeListDto
+                        {
+                            Id = tr.Employee.Id,
+                            Email = tr.Employee.User.Email,
+                            FirstName = tr.Employee.FirstName,
+                            LastName = tr.Employee.LastName,
+                            Position = tr.Employee.Position,
+                            Role = tr.Employee.User.Role,
+                            CompanyId = tr.Employee.CompanyId,
+                            CompanyName = null,
+                            IsAssignedToCompany = tr.Employee.CompanyId.HasValue
+                        },
+                        ProcessedByManager = tr.ProcessedByManager != null ? new EmployeeListDto
+                        {
+                            Id = tr.ProcessedByManager.Id,
+                            Email = tr.ProcessedByManager.User.Email,
+                            FirstName = tr.ProcessedByManager.FirstName,
+                            LastName = tr.ProcessedByManager.LastName,
+                            Position = tr.ProcessedByManager.Position,
+                            Role = tr.ProcessedByManager.User.Role,
+                            CompanyId = tr.ProcessedByManager.CompanyId,
+                            CompanyName = null,
+                            IsAssignedToCompany = tr.ProcessedByManager.CompanyId.HasValue
+                        } : null
+                    }).ToList(),
+                    TotalRequests = dayRequests.Count,
+                    ApprovedRequests = dayRequests.Count(r => r.Status == "Approved"),
+                    PendingRequests = dayRequests.Count(r => r.Status == "Pending"),
+                    RejectedRequests = dayRequests.Count(r => r.Status == "Rejected")
+                };
+
+                dailyRequests.Add(dailyTelework);
+            }
+
             return new WeeklyPlanningDto
             {
                 WeekStart = weekStart,
                 WeekEnd = weekEnd,
-                Requests = requests.Select(tr => new TeleworkRequestDto
-                {
-                    Id = tr.Id,
-                    EmployeeId = tr.EmployeeId,
-                    EmployeeName = $"{tr.Employee.FirstName} {tr.Employee.LastName}",
-                    RequestDate = tr.RequestDate,
-                    TeleworkDate = tr.TeleworkDate,
-                    Reason = tr.Reason,
-                    Status = tr.Status,
-                    ManagerComment = tr.ManagerComment,
-                    ProcessedAt = tr.ProcessedAt,
-                    ProcessedByManagerId = tr.ProcessedByManagerId,
-                    ProcessedByManagerName = tr.ProcessedByManager != null 
-                        ? $"{tr.ProcessedByManager.FirstName} {tr.ProcessedByManager.LastName}" 
-                        : null
-                }).ToList()
+                DailyRequests = dailyRequests,
+                Stats = stats
             };
         }
     }

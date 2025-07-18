@@ -165,3 +165,5 @@
 /Users/axel/Documents/IPI/workspace/monTT/Backend/obj/Debug/net8.0/TeleworkManagementAPI.pdb
 /Users/axel/Documents/IPI/workspace/monTT/Backend/obj/Debug/net8.0/TeleworkManagementAPI.genruntimeconfig.cache
 /Users/axel/Documents/IPI/workspace/monTT/Backend/obj/Debug/net8.0/ref/TeleworkManagementAPI.dll
+/Users/axel/Documents/IPI/workspace/monTT/Backend/obj/Debug/net8.0/TeleworkManagementAPI.sourcelink.json
+/Users/axel/Documents/IPI/workspace/monTT/Backend/bin/Debug/net8.0/TeleworkManagementAPI.staticwebassets.runtime.json

@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/axel/Documents/IPI/workspace/monTT/Backend/wwwroot/.gitkeep",
+      "PackagePath": "staticwebassets/.gitkeep"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.TeleworkManagementAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.TeleworkManagementAPI.props",
+      "PackagePath": "build\\TeleworkManagementAPI.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.TeleworkManagementAPI.props",
+      "PackagePath": "buildMultiTargeting\\TeleworkManagementAPI.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.TeleworkManagementAPI.props",
+      "PackagePath": "buildTransitive\\TeleworkManagementAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

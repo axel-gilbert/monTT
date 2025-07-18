@@ -71,14 +71,21 @@ namespace TeleworkManagementAPI.Services
                 Token = token,
                 RefreshToken = refreshToken,
                 ExpiresAt = DateTime.UtcNow.AddHours(24),
-                User = new UserDto
+                User = new UserProfileDto
                 {
                     Id = user.Id,
                     Email = user.Email,
                     Role = user.Role,
-                    FirstName = employee.FirstName,
-                    LastName = employee.LastName,
-                    Position = employee.Position
+                    CreatedAt = user.CreatedAt,
+                    Employee = new EmployeeProfileDto
+                    {
+                        Id = employee.Id,
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        Position = employee.Position,
+                        CompanyId = employee.CompanyId,
+                        CompanyName = null
+                    }
                 }
             };
         }
@@ -102,16 +109,21 @@ namespace TeleworkManagementAPI.Services
                 Token = token,
                 RefreshToken = refreshToken,
                 ExpiresAt = DateTime.UtcNow.AddHours(24),
-                User = new UserDto
+                User = new UserProfileDto
                 {
                     Id = user.Id,
                     Email = user.Email,
                     Role = user.Role,
-                    FirstName = user.Employee?.FirstName ?? "",
-                    LastName = user.Employee?.LastName ?? "",
-                    Position = user.Employee?.Position ?? "",
-                    CompanyId = user.Employee?.CompanyId,
-                    CompanyName = user.Employee?.Company?.Name
+                    CreatedAt = user.CreatedAt,
+                    Employee = user.Employee != null ? new EmployeeProfileDto
+                    {
+                        Id = user.Employee.Id,
+                        FirstName = user.Employee.FirstName,
+                        LastName = user.Employee.LastName,
+                        Position = user.Employee.Position,
+                        CompanyId = user.Employee.CompanyId,
+                        CompanyName = user.Employee.Company?.Name
+                    } : null
                 }
             };
         }

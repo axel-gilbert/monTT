@@ -1,0 +1,2 @@
+# Ce fichier permet de conserver le dossier wwwroot dans git
+# ASP.NET Core nécessite ce dossier pour les fichiers statiques 

@@ -220,35 +220,6 @@
 
 ---
 
-## 🎯 Sprint 6 : Finalisation et Déploiement (Semaine 6)
-
-### Objectifs
-- Optimisations finales
-- Déploiement
-
-### Tâches Techniques
-- [ ] **Optimisations Finales**
-  - Optimisation des requêtes API
-  - Optimisation du frontend
-  - Gestion des erreurs robuste
-  - Sécurité renforcée
-
-- [ ] **Déploiement**
-  - Configuration de production
-  - Déploiement backend (Azure/Heroku)
-  - Déploiement frontend (Vercel/Netlify)
-  - Configuration des variables d'environnement
-
-### Livrables
-- ✅ Application 100% fonctionnelle
-- ✅ Application déployée et accessible
-
-### Critères d'Acceptation
-- L'application fonctionne en production
-- L'application est accessible publiquement
-
----
-
 ## 📊 Métriques de Succès
 
 ### Fonctionnelles
