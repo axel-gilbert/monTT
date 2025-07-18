@@ -61,8 +61,11 @@ export interface TeleworkRequest {
 }
 
 export interface CreateTeleworkRequest {
-  teleworkDate: string;
-  reason: string;
+  teleworkDate?: string;
+  reason?: string;
+  // Pour compatibilité backend (majuscule)
+  TeleworkDate?: string;
+  Reason?: string;
 }
 
 export interface ProcessTeleworkRequest {

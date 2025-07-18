@@ -40,7 +40,7 @@
 </script>
 
 <svelte:head>
-  <title>Test API - Telework Management</title>
+  <title>Test API - MonTT</title>
 </svelte:head>
 
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

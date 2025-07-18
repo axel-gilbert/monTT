@@ -60,6 +60,12 @@ namespace TeleworkManagementAPI.DTOs
         /// </summary>
         /// <example>TechCorp Solutions</example>
         public string? CompanyName { get; set; }
+
+        /// <summary>
+        /// Date de création du compte utilisateur
+        /// </summary>
+        /// <example>2024-01-15T10:30:00Z</example>
+        public DateTime CreatedAt { get; set; }
     }
 
     /// <summary>

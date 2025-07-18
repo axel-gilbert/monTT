@@ -44,7 +44,8 @@ namespace TeleworkManagementAPI.Services
                 Position = employee.Position,
                 Role = employee.User.Role,
                 CompanyId = employee.CompanyId,
-                CompanyName = employee.Company?.Name
+                CompanyName = employee.Company?.Name,
+                CreatedAt = employee.User.CreatedAt
             };
         }
 
@@ -74,7 +75,8 @@ namespace TeleworkManagementAPI.Services
                 Position = employee.Position,
                 Role = employee.User.Role,
                 CompanyId = employee.CompanyId,
-                CompanyName = employee.Company?.Name
+                CompanyName = employee.Company?.Name,
+                CreatedAt = employee.User.CreatedAt
             };
         }
 
@@ -148,7 +150,8 @@ namespace TeleworkManagementAPI.Services
                 Position = employee.Position,
                 Role = employee.User.Role,
                 CompanyId = employee.CompanyId,
-                CompanyName = employee.Company?.Name
+                CompanyName = employee.Company?.Name,
+                CreatedAt = employee.User.CreatedAt
             };
         }
 
@@ -172,7 +175,8 @@ namespace TeleworkManagementAPI.Services
                 Position = employee.Position,
                 Role = employee.User.Role,
                 CompanyId = employee.CompanyId,
-                CompanyName = employee.Company?.Name
+                CompanyName = employee.Company?.Name,
+                CreatedAt = employee.User.CreatedAt
             };
         }
     }

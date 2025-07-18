@@ -29,7 +29,7 @@
 </script>
 
 <svelte:head>
-  <title>Telework Management</title>
+  <title>MonTT</title>
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50" on:click={handleClickOutside}>
@@ -46,7 +46,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z"></path>
               </svg>
             </div>
-            <span class="text-xl font-bold text-gray-900">Telework Manager</span>
+            <span class="text-xl font-bold text-gray-900">MonTT</span>
           </a>
 
           {#if $authStore.isAuthenticated}
@@ -58,12 +58,14 @@
                 Dashboard
               </a>
               
-              <a
-                href="/requests"
-                class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors {$page.url.pathname.startsWith('/requests') ? 'text-blue-600 bg-blue-50' : ''}"
-              >
-                Mes demandes
-              </a>
+              {#if $authStore.user?.role !== 'Manager'}
+                <a
+                  href="/requests"
+                  class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors {$page.url.pathname.startsWith('/requests') ? 'text-blue-600 bg-blue-50' : ''}"
+                >
+                  Mes demandes
+                </a>
+              {/if}
 
               {#if $authStore.user?.role === 'Manager'}
                 <a

@@ -18,11 +18,22 @@
       goto('/');
       return;
     }
+
+    // Les managers ne peuvent pas créer de demandes personnelles
+    if ($authStore.user?.role === 'Manager') {
+      goto('/dashboard');
+      return;
+    }
   });
 
   async function handleSubmit() {
     if (!form.teleworkDate || !form.reason) {
       error = 'Veuillez remplir tous les champs';
+      return;
+    }
+
+    if (form.reason.length < 10) {
+      error = 'La raison doit contenir au moins 10 caractères';
       return;
     }
 
@@ -41,8 +52,8 @@
 
     try {
       await apiService.createTeleworkRequest({
-        teleworkDate: form.teleworkDate,
-        reason: form.reason
+        TeleworkDate: form.teleworkDate,
+        Reason: form.reason
       });
       
       success = true;
@@ -69,7 +80,7 @@
 </script>
 
 <svelte:head>
-  <title>Nouvelle demande - Telework Management</title>
+  <title>Nouvelle demande - MonTT</title>
 </svelte:head>
 
 <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

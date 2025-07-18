@@ -31,21 +31,39 @@
 
   async function loadDashboardData() {
     try {
-      // Charger les demandes de l'utilisateur
-      const requests = await apiService.getMyRequests();
-      
-      // Calculer les statistiques
-      stats = {
-        totalRequests: requests.length,
-        pendingRequests: requests.filter(r => r.status === 'Pending').length,
-        approvedRequests: requests.filter(r => r.status === 'Approved').length,
-        rejectedRequests: requests.filter(r => r.status === 'Rejected').length
-      };
+      if (isManager) {
+        // Pour les managers : charger les demandes de l'entreprise
+        const requests = await apiService.getCompanyRequests();
+        
+        // Calculer les statistiques de l'entreprise
+        stats = {
+          totalRequests: requests.length,
+          pendingRequests: requests.filter(r => r.status === 'Pending').length,
+          approvedRequests: requests.filter(r => r.status === 'Approved').length,
+          rejectedRequests: requests.filter(r => r.status === 'Rejected').length
+        };
 
-      // Récupérer les demandes récentes (5 dernières)
-      recentRequests = requests
-        .sort((a, b) => new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime())
-        .slice(0, 5);
+        // Récupérer les demandes récentes de l'entreprise (5 dernières)
+        recentRequests = requests
+          .sort((a, b) => new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime())
+          .slice(0, 5);
+      } else {
+        // Pour les employés : charger leurs propres demandes
+        const requests = await apiService.getMyRequests();
+        
+        // Calculer les statistiques personnelles
+        stats = {
+          totalRequests: requests.length,
+          pendingRequests: requests.filter(r => r.status === 'Pending').length,
+          approvedRequests: requests.filter(r => r.status === 'Approved').length,
+          rejectedRequests: requests.filter(r => r.status === 'Rejected').length
+        };
+
+        // Récupérer les demandes récentes personnelles (5 dernières)
+        recentRequests = requests
+          .sort((a, b) => new Date(b.requestDate).getTime() - new Date(a.requestDate).getTime())
+          .slice(0, 5);
+      }
 
     } catch (err) {
       error = err instanceof Error ? err.message : 'Erreur lors du chargement des données';
@@ -82,7 +100,7 @@
 </script>
 
 <svelte:head>
-  <title>Dashboard - Telework Management</title>
+  <title>Dashboard - MonTT</title>
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -182,59 +200,77 @@
 
     <!-- Actions rapides -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-      <!-- Actions pour tous les utilisateurs -->
-      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h2>
-        <div class="space-y-3">
-          <a
-            href="/requests/new"
-            class="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
-          >
-            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-              </svg>
-            </div>
-            <div class="ml-4">
-              <h3 class="font-medium text-gray-900">Nouvelle demande</h3>
-              <p class="text-sm text-gray-600">Créer une demande de télétravail</p>
-            </div>
-          </a>
+      {#if !isManager}
+        <!-- Actions pour les employés -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">Actions rapides</h2>
+          <div class="space-y-3">
+            <a
+              href="/requests/new"
+              class="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+            >
+              <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="font-medium text-gray-900">Nouvelle demande</h3>
+                <p class="text-sm text-gray-600">Créer une demande de télétravail</p>
+              </div>
+            </a>
 
-          <a
-            href="/requests"
-            class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
-          >
-            <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-              </svg>
-            </div>
-            <div class="ml-4">
-              <h3 class="font-medium text-gray-900">Mes demandes</h3>
-              <p class="text-sm text-gray-600">Voir toutes mes demandes</p>
-            </div>
-          </a>
+            <a
+              href="/requests"
+              class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
+            >
+              <div class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="font-medium text-gray-900">Mes demandes</h3>
+                <p class="text-sm text-gray-600">Voir toutes mes demandes</p>
+              </div>
+            </a>
 
-          <a
-            href="/profile"
-            class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
-          >
-            <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
-              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-              </svg>
-            </div>
-            <div class="ml-4">
-              <h3 class="font-medium text-gray-900">Mon profil</h3>
-              <p class="text-sm text-gray-600">Gérer mes informations</p>
-            </div>
-          </a>
+            <a
+              href="/profile"
+              class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+            >
+              <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="font-medium text-gray-900">Mon profil</h3>
+                <p class="text-sm text-gray-600">Gérer mes informations</p>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
 
-      <!-- Actions pour les managers -->
-      {#if isManager}
+        <!-- Espace vide pour les utilisateurs normaux -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">Informations</h2>
+          <div class="space-y-3">
+            <div class="flex items-center p-4 bg-gray-50 rounded-lg">
+              <div class="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="font-medium text-gray-900">Statut</h3>
+                <p class="text-sm text-gray-600">Vous avez {stats.pendingRequests} demande(s) en attente</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {:else}
+        <!-- Actions pour les managers -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 class="text-lg font-semibold text-gray-900 mb-4">Actions manager</h2>
           <div class="space-y-3">
@@ -284,11 +320,26 @@
             </a>
           </div>
         </div>
-      {:else}
-        <!-- Espace vide pour les utilisateurs normaux -->
+
+        <!-- Profil pour les managers -->
         <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <h2 class="text-lg font-semibold text-gray-900 mb-4">Informations</h2>
+          <h2 class="text-lg font-semibold text-gray-900 mb-4">Gestion</h2>
           <div class="space-y-3">
+            <a
+              href="/profile"
+              class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors"
+            >
+              <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                </svg>
+              </div>
+              <div class="ml-4">
+                <h3 class="font-medium text-gray-900">Mon profil</h3>
+                <p class="text-sm text-gray-600">Gérer mes informations</p>
+              </div>
+            </a>
+
             <div class="flex items-center p-4 bg-gray-50 rounded-lg">
               <div class="w-10 h-10 bg-gray-600 rounded-lg flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -297,7 +348,7 @@
               </div>
               <div class="ml-4">
                 <h3 class="font-medium text-gray-900">Statut</h3>
-                <p class="text-sm text-gray-600">Vous avez {stats.pendingRequests} demande(s) en attente</p>
+                <p class="text-sm text-gray-600">{stats.pendingRequests} demande(s) en attente de traitement</p>
               </div>
             </div>
           </div>
@@ -308,12 +359,14 @@
     <!-- Demandes récentes -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div class="flex items-center justify-between mb-6">
-        <h2 class="text-lg font-semibold text-gray-900">Demandes récentes</h2>
+        <h2 class="text-lg font-semibold text-gray-900">
+          {isManager ? 'Demandes récentes de l\'entreprise' : 'Mes demandes récentes'}
+        </h2>
         <a
-          href="/requests"
+          href={isManager ? '/company-requests' : '/requests'}
           class="text-blue-600 hover:text-blue-700 text-sm font-medium"
         >
-          Voir toutes →
+          {isManager ? 'Voir toutes les demandes →' : 'Voir toutes mes demandes →'}
         </a>
       </div>
 
@@ -352,16 +405,23 @@
           <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
           </svg>
-          <h3 class="mt-4 text-lg font-medium text-gray-900">Aucune demande</h3>
+          <h3 class="mt-4 text-lg font-medium text-gray-900">
+            {isManager ? 'Aucune demande dans l\'entreprise' : 'Aucune demande'}
+          </h3>
           <p class="mt-2 text-gray-500">
-            Vous n'avez pas encore créé de demande de télétravail.
+            {isManager 
+              ? 'Aucun employé n\'a encore créé de demande de télétravail.'
+              : 'Vous n\'avez pas encore créé de demande de télétravail.'
+            }
           </p>
-          <a
-            href="/requests/new"
-            class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Créer ma première demande
-          </a>
+          {#if !isManager}
+            <a
+              href="/requests/new"
+              class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Créer ma première demande
+            </a>
+          {/if}
         </div>
       {/if}
     </div>

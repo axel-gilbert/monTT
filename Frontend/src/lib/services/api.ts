@@ -117,26 +117,26 @@ class ApiService {
 
   // Employés
   async getProfile(): Promise<Employee> {
-    return this.request<Employee>('/Employees/profile');
+    return this.request<Employee>('/Employee/profile');
   }
 
   async updateProfile(data: UpdateEmployeeRequest): Promise<Employee> {
-    return this.request<Employee>('/Employees/profile', {
+    return this.request<Employee>('/Employee/profile', {
       method: 'PUT',
       body: JSON.stringify(data)
     });
   }
 
   async getAllEmployees(): Promise<EmployeeList[]> {
-    return this.request<EmployeeList[]>('/Employees');
+    return this.request<EmployeeList[]>('/Employee');
   }
 
   async getEmployeeById(id: number): Promise<Employee> {
-    return this.request<Employee>(`/Employees/${id}`);
+    return this.request<Employee>(`/Employee/${id}`);
   }
 
   async assignEmployeeToCompany(data: AssignEmployeeRequest): Promise<Employee> {
-    return this.request<Employee>('/Employees/assign-to-company', {
+    return this.request<Employee>('/Employee/assign-to-company', {
       method: 'POST',
       body: JSON.stringify(data)
     });
@@ -144,25 +144,25 @@ class ApiService {
 
   // Entreprises
   async createCompany(data: CreateCompanyRequest): Promise<Company> {
-    return this.request<Company>('/Companies', {
+    return this.request<Company>('/Company', {
       method: 'POST',
       body: JSON.stringify(data)
     });
   }
 
   async getMyCompany(): Promise<Company> {
-    return this.request<Company>('/Companies/my-company');
+    return this.request<Company>('/Company/my-company');
   }
 
   async updateCompany(data: UpdateCompanyRequest): Promise<Company> {
-    return this.request<Company>('/Companies', {
+    return this.request<Company>('/Company', {
       method: 'PUT',
       body: JSON.stringify(data)
     });
   }
 
   async getMyCompanyWithEmployees(): Promise<Company> {
-    return this.request<Company>('/Companies/my-company/employees');
+    return this.request<Company>('/Company/my-company/employees');
   }
 
   // Demandes de télétravail

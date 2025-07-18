@@ -112,7 +112,7 @@
 </script>
 
 <svelte:head>
-  <title>Planning hebdomadaire - Telework Management</title>
+  <title>Planning hebdomadaire - MonTT</title>
 </svelte:head>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
