@@ -21,6 +21,14 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Créer une nouvelle entreprise
         /// </summary>
+        /// <remarks>
+        /// Permet à un manager de créer une nouvelle entreprise.
+        /// 
+        /// Exemple de requête :
+        /// {
+        ///   "name": "TechCorp Solutions"
+        /// }
+        /// </remarks>
         /// <param name="createDto">Données de l'entreprise</param>
         /// <returns>Entreprise créée</returns>
         /// <response code="201">Entreprise créée avec succès</response>
@@ -51,6 +59,9 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Obtenir les informations de mon entreprise
         /// </summary>
+        /// <remarks>
+        /// Retourne les informations de l'entreprise gérée par le manager connecté.
+        /// </remarks>
         /// <returns>Informations de l'entreprise</returns>
         /// <response code="200">Entreprise récupérée avec succès</response>
         /// <response code="401">Non authentifié</response>
@@ -78,6 +89,14 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Mettre à jour les informations de mon entreprise
         /// </summary>
+        /// <remarks>
+        /// Permet au manager de modifier le nom de son entreprise.
+        /// 
+        /// Exemple de requête :
+        /// {
+        ///   "name": "Nouvelle société"
+        /// }
+        /// </remarks>
         /// <param name="updateDto">Données de mise à jour</param>
         /// <returns>Entreprise mise à jour</returns>
         /// <response code="200">Entreprise mise à jour avec succès</response>
@@ -108,6 +127,9 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Obtenir les informations de mon entreprise avec la liste des employés
         /// </summary>
+        /// <remarks>
+        /// Retourne les informations de l'entreprise et la liste de tous les employés assignés à cette entreprise.
+        /// </remarks>
         /// <returns>Entreprise avec liste des employés</returns>
         /// <response code="200">Données récupérées avec succès</response>
         /// <response code="401">Non authentifié</response>

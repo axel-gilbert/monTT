@@ -21,6 +21,9 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Obtenir le profil de l'utilisateur connecté
         /// </summary>
+        /// <remarks>
+        /// Retourne les informations du profil de l'utilisateur actuellement connecté.
+        /// </remarks>
         /// <returns>Profil de l'employé connecté</returns>
         /// <response code="200">Profil récupéré avec succès</response>
         /// <response code="401">Non authentifié</response>
@@ -46,6 +49,16 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Mettre à jour le profil de l'utilisateur connecté
         /// </summary>
+        /// <remarks>
+        /// Permet à l'utilisateur connecté de modifier ses informations personnelles et professionnelles.
+        /// 
+        /// Exemple de requête :
+        /// {
+        ///   "firstName": "Axel",
+        ///   "lastName": "Dupont",
+        ///   "position": "Développeur"
+        /// }
+        /// </remarks>
         /// <param name="updateDto">Données de mise à jour</param>
         /// <returns>Profil mis à jour</returns>
         /// <response code="200">Profil mis à jour avec succès</response>
@@ -74,6 +87,9 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Obtenir la liste de tous les employés (Manager uniquement)
         /// </summary>
+        /// <remarks>
+        /// Permet à un manager de voir tous les employés de son entreprise ou non assignés.
+        /// </remarks>
         /// <returns>Liste des employés</returns>
         /// <response code="200">Liste récupérée avec succès</response>
         /// <response code="401">Non authentifié</response>
@@ -100,6 +116,15 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Assigner un employé à une entreprise (Manager uniquement)
         /// </summary>
+        /// <remarks>
+        /// Permet à un manager d'assigner un employé à son entreprise.
+        /// 
+        /// Exemple de requête :
+        /// {
+        ///   "employeeId": 2,
+        ///   "companyId": 1
+        /// }
+        /// </remarks>
         /// <param name="assignDto">Données d'assignation</param>
         /// <returns>Employé assigné</returns>
         /// <response code="200">Employé assigné avec succès</response>
@@ -131,6 +156,9 @@ namespace TeleworkManagementAPI.Controllers
         /// <summary>
         /// Obtenir un employé par son ID (Manager uniquement)
         /// </summary>
+        /// <remarks>
+        /// Permet à un manager de consulter le profil détaillé d'un employé par son identifiant.
+        /// </remarks>
         /// <param name="id">ID de l'employé</param>
         /// <returns>Détails de l'employé</returns>
         /// <response code="200">Employé récupéré avec succès</response>

@@ -27,7 +27,6 @@ namespace TeleworkManagementAPI.Controllers
         /// L'utilisateur peut choisir son rôle (User ou Manager).
         /// 
         /// Exemple de requête :
-        /// ```json
         /// {
         ///   "email": "john.doe@entreprise.com",
         ///   "password": "MotDePasse123!",
@@ -36,7 +35,6 @@ namespace TeleworkManagementAPI.Controllers
         ///   "position": "Développeur Senior",
         ///   "role": "User"
         /// }
-        /// ```
         /// </remarks>
         /// <param name="registerDto">Données d'inscription de l'utilisateur</param>
         /// <returns>Token d'authentification et informations utilisateur</returns>
@@ -68,12 +66,10 @@ namespace TeleworkManagementAPI.Controllers
         /// Retourne un token JWT valide pour les requêtes authentifiées.
         /// 
         /// Exemple de requête :
-        /// ```json
         /// {
         ///   "email": "john.doe@entreprise.com",
         ///   "password": "MotDePasse123!"
         /// }
-        /// ```
         /// </remarks>
         /// <param name="loginDto">Données de connexion</param>
         /// <returns>Token d'authentification et informations utilisateur</returns>
@@ -105,11 +101,9 @@ namespace TeleworkManagementAPI.Controllers
         /// Cette fonctionnalité sera implémentée dans une version future.
         /// 
         /// Exemple de requête :
-        /// ```json
         /// {
         ///   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
         /// }
-        /// ```
         /// </remarks>
         /// <param name="refreshTokenDto">Token de renouvellement</param>
         /// <returns>Nouveau token d'authentification</returns>
