@@ -1,3 +1,15 @@
 # Ignorer la base de données SQLite
 app.db
-*.db 
+*.db
+*.db-shm
+*.db-wal
+
+# Ignorer les dossiers de build .NET
+bin/
+obj/
+
+# Ignorer les fichiers de logs
+*.log
+
+# Ignorer la configuration locale
+appsettings.Development.json 
