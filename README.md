@@ -4,6 +4,10 @@
 
 **MonTT** est une application web minimaliste de gestion du télétravail. Elle permet aux employés de soumettre des demandes de télétravail, et aux managers de les approuver ou refuser, de planifier la semaine et de gérer les employés de leur entreprise. L'application propose une API RESTful en ASP.NET Core (backend) et une interface moderne en SvelteKit (frontend).
 
+### Fonctionnalité phare : planning unifié pour le manager
+
+Les managers disposent d'un planning de visualisation hebdomadaire qui leur permet de voir, en un coup d'œil, l'ensemble des demandes de télétravail de tous les employés de leur entreprise. Ce planning unifié facilite la gestion, l'organisation et l'équilibre des équipes, en offrant une vue centralisée de la répartition du télétravail sur la semaine.
+
 ## Démarrage du projet
 
 ### 1. Backend (ASP.NET Core)
@@ -31,6 +35,10 @@ npm run dev
 ```
 
 - L'application sera accessible sur [http://localhost:5173](http://localhost:5173)
+
+#### Aperçu de l'interface utilisateur
+
+![Aperçu du frontend](assets/frontend.png)
 
 ## Identifiants de connexion pour tester
 
@@ -88,4 +96,6 @@ erDiagram
 
 ---
 
-**Swagger** est disponible pour explorer et tester l'API. 
+**Swagger** est disponible pour explorer et tester l'API.
+
+![Aperçu de la documentation Swagger](assets/swagger.png) 
