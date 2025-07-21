@@ -74,6 +74,10 @@ builder.Services.AddSwaggerGen(c =>
 
     // Configuration des schémas personnalisés
     c.CustomSchemaIds(type => type.Name.Replace("Dto", ""));
+    // Ajout de l'inclusion des commentaires XML
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
 });
 
 // Configuration de la base de données SQLite
