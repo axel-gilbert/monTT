@@ -60,7 +60,7 @@ npm run dev
 - Mot de passe : `password123`
 
 **Employé**
-- Email : `employee1@test.com`
+- Email : `marie.martin@test.com`
 - Mot de passe : `password123`
 
 D'autres comptes de test sont générés automatiquement (voir la seed de la base).
