@@ -1,5 +1,18 @@
 # MonTT
 
+## ⚠️ DISCLAIMER - PROOF OF CONCEPT (POC)
+
+**Cette application web est un POC avec des limitations importantes :**
+
+- 🔒 **Non sécurisée** : Pas adaptée à un usage en production
+- 🛡️ **Gestion d'erreurs basique** : Aucun système robuste implémenté
+- 🧪 **Tests inexistants** : Aucun test automatisé
+- 🔧 **Configuration de développement** : Paramètres non sécurisés
+
+**Destinée uniquement à des fins de démonstration. Ne pas utiliser en production.**
+
+---
+
 ## Présentation du projet
 
 **MonTT** est une application web minimaliste de gestion du télétravail. Elle permet aux employés de soumettre des demandes de télétravail, et aux managers de les approuver ou refuser, de planifier la semaine et de gérer les employés de leur entreprise. L'application propose une API RESTful en ASP.NET Core (backend) et une interface moderne en SvelteKit (frontend).
